@@ -4,3 +4,18 @@ Describe your project here
 
 :include:capivara.rdoc
 
+TODO:
+
+- Comecar a estruturacao para adicionar os testes com a gem ARUBA e testes unitarios com o MiniTest;
+- Verificar 'bug' no CREATE quando e adicionado mais de uma camada para pasta raiz do projeto;
+- Adicionar mais configuracoes no CAPIVARA.JSON para melhor estruturar algumas chamadas de objetos das classes;
+- Adicionar os comandos LIST
+> LIST devera:
+> - listar tags (podendo ser por arquivos separados ou todos);
+> - usar o TTY Table;
+> - estruturar de uma forma que haja um comando global para exportar em csv;
+
+- Melhorias nas criacoes dos path, estudar o uso do `__FILE__`,`File.extend_path()`, variaveis de ambiente;
+- Adicionar validacoes no input dos comandos CREATE e GENERATE para nao aceitar caracteres especiais;
+- Modularizar Erros. Usar o `on_error` do GLI para manipular os erros;
+- Refatorar IFs que usem a mesma estrutura para um modulo.
