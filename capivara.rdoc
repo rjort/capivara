@@ -1,0 +1,5 @@
+= capivara
+
+Generate this with
+    capivara _doc
+After you have described your command line interface

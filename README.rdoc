@@ -1,0 +1,6 @@
+= capivara
+
+Describe your project here
+
+:include:capivara.rdoc
+

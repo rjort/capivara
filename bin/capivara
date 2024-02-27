@@ -1,0 +1,99 @@
+#!/usr/bin/env ruby
+require 'gli'
+
+begin # XXX: Remove this begin/rescue before distributing your app
+  require 'capivara'
+rescue LoadError
+  warn 'In development, you need to use `bundle exec bin/capivara` to run your app'
+  warn 'At install-time, RubyGems will make sure lib, etc. are in the load path'
+  warn 'Feel free to remove this message from bin/capivara now'
+  exit 64
+end
+
+class App
+  extend GLI::App
+
+  program_desc 'Generates templates for Capybara projects.'
+
+  version Capivara::VERSION
+
+  subcommand_option_handling :normal
+  arguments :strict
+
+  flag [:T, :template], desc: "Use a template type. Verify the '/templates' directory",
+                        default_value: 'default',
+                        arg_name: 'template_name'
+
+  desc 'Create a new config file. It must be in the projects root directory.'
+  command :config do |c|
+    config_command = Commands::Config.new
+
+    c.switch %i[i init], negatable: false, desc: 'Start new config file (capivara.json)'
+
+    c.action do |global_options, options, args|
+      config_command.run_config if options[:i]
+    end
+  end
+
+  desc 'Create a new project automation'
+  command [:create, :c] do |c|
+
+    c.flag [:n, :new], desc: 'Create new project', arg_name: 'project_name'
+
+    c.action do |global_options, options, args|
+      create_command = Commands::Create.new(options[:n])
+      create_command.run_create
+    end
+  end
+
+  desc 'Generate Gherkin, Page, Step and Section files'
+  command [:generate, :g] do |c|
+
+    c.flag %i[a all], desc: 'Create all files (Page, Gherkin, Step)', arg_name: 'file|path/file'
+
+    c.flag %i[G gherkin], desc: 'Create a Gherkin file (.feature)', arg_name: 'path|my/gherkin'
+
+    c.flag %i[p page], desc: 'Create a page object file (.rb)', arg_name: 'path|my/page'
+
+    c.flag %i[s step], desc: 'Create a Step file (*_step.rb)', arg_name: 'path|my/step'
+
+    c.flag %i[S section], desc: 'Create a Section file (.rb)', arg_name: 'path|my/section'
+
+    c.action do |_global_options, options, args|
+      generate_command = Commands::Generate.new
+      generate_command.run_generate
+    end
+  end
+
+  pre do |global, _command, options, _args|
+    Commands::Handle::CommandData.set_template_type global[:template]
+
+    # valida se o nome do projeto possui uma /
+    # BUG ($ capivara create -n nome/do/projeto): passar o nome do projeto com mais de uma pasta "a/b/c" causa erro
+    # estou limitando nesse momento isso so pra ganhar tempo para resolver as outras coisas.
+    # NOTE: o unless abaixo faz com que o options[:n] nao seja idenficado em outros comandos.
+    # unless options[:n].nil?
+    #   exit -1 if options[:n].include?('/')
+    # end
+
+    # NOTE: apenas para o comando generate
+    opt = options.find { |_, value| !value.nil? }
+    Commands::Handle::CommandData.generate_option(opt)
+
+    true
+  end
+
+  post do |global, command, options, args|
+    # Post logic here
+    # Use skips_post before a command to skip this
+    # block on that command only
+  end
+
+  on_error do |_exception|
+    # Error logic here
+    # return false to skip default error handling
+    true
+  end
+end
+
+exit App.run(ARGV)

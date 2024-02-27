@@ -1,0 +1,34 @@
+{
+  "capivara.json": null,
+  "qa.gemspec": null,
+  "cucumber.yml": null,
+  "Gemfile": null,
+  "Rakefile": null,
+  ".rubocop.yml": null,
+  "reports": {
+    "screenshots": { ".keep": null }
+  },
+  "features": {
+    "page_objects": {
+      "pages": { ".keep": null },
+      "sections": { ".keep": null },
+      "utils": { ".keep": null }
+    },
+    "support": {
+      "env.rb": null,
+      "hooks.rb": null,
+      "spec_helper": {
+        "project_name": { "project_name.rb": null }
+      },
+      "env": {
+        "project_name": {
+          "dev": { "base.yml": "basedomain:" },
+          "hml": { "base.yml": "basedomain:" },
+          "prd": { "base.yml": "basedomain:" }
+        }
+      }
+    },
+    "specs": { ".keep": null },
+    "step_definitions": { ".keep": null }
+  }
+}
