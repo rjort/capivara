@@ -33,7 +33,6 @@ module Commands
         else
           STDERR.puts "File #{File.basename(full_path)} not created".colorize(:red)
           STDERR.puts "Full path: #{full_path}".colorize(:yellow)
-          exit 1
         end
       end
     end

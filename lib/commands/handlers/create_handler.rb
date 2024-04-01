@@ -12,6 +12,8 @@ module Commands
           else
             return false
           end
+        else
+          true
         end
       end
     end
