@@ -6,14 +6,18 @@ module Commands
                   :project_name,
                   :project_path,
                   :json_path,
-                  :projet_root_path
+                  :projet_root_path,
+                  :flag_option,
+                  :flag_value
 
       def self.set_template_type(type)
         @@schema_type = type
       end
 
-      def self.generate_option(opt)
-        @@generate_opt_flag, @@generate_flag_arg = opt
+      def self.flag_options(opt)
+        @@flag, @@value = opt
+        @flag_option  = @@flag
+        @flag_value   = @@value
       end
 
       def data_generate
@@ -29,8 +33,8 @@ module Commands
           section_path: File.join(@features_path, '/page_objects/sections'),
           gherkin_path: File.join(@features_path, '/specs'),
           json_path: @json_path,
-          generate_flag: @@generate_opt_flag,
-          generate_arg: @@generate_flag_arg
+          generate_flag: @@flag,
+          generate_arg: @@value
         }
       end
 
