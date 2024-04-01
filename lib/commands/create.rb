@@ -1,6 +1,6 @@
 module Commands
   class Create
-    include Commands::Handle::CommandData
+    include Commands::Handlers::CommandData
 
     def initialize(project_name)
       @data = data_create
@@ -39,7 +39,6 @@ module Commands
       JSON.parse(json_data)
     end
 
-    # Search 
     def search_template(template_path, schema_type)
       all_arqv ||= []
 
@@ -49,7 +48,7 @@ module Commands
 
           all_arqv << File.basename(arqv,'.*')
         end
-        puts "Templates folder OK".colorize(:green) if all_arqv.include?(schema_type)
+        STDOUT.puts "Templates folder OK".colorize(:green) if all_arqv.include?(schema_type)
       else
         STDERR.puts "Templates folder not exists or empty".colorize(:red)
         STDERR.puts "Full path: #{template_path}".colorize(:yellow)
@@ -57,29 +56,31 @@ module Commands
       end
     end
 
-    def check_file(path)
-      if File.file?(path)
-        puts "Created: #{File.basename(path)}".colorize(:green) unless File.basename(path) == '.keep'
+    def check_existence(path, type)
+      if type == :file
+        result = File.file?(path)
+        name = 'File'
+      elsif type == :dir
+        result = File.directory?(path)
+        name = 'Directory'
       else
-        STDERR.puts "File #{File.basename(path)} not created".colorize(:red)
-        STDERR.puts "Full path: #{path}".colorize(:yellow)
-        exit -1
+        raise ArgumentError, "Invalid type: #{type}. Expected :file or :dir"
       end
-    end
-    
-    def check_dir(path)
-      if File.directory?(path)
-        puts "Created: #{File.basename(path)}".colorize(:green)
-      else
-        STDERR.puts "Directory #{File.basename(path)} not created".colorize(:red)
-        STDERR.puts "Full path: #{path}".colorize(:yellow)
-        exit -1
+
+      unless result
+        STDERR.puts "#{name} #{File.basename(path)} not created".colorize(:red)
+        STDERR.puts "Full Path: #{path}".colorize(:yellow)
       end
+
+      result
     end
 
     def create_file(path, content = nil)
       File.open(path, 'w') do |file|
-        check_file(file)
+        if check_existence(path, :file)
+          STDOUT.puts "Created: #{File.basename(path)}".colorize(:green) unless File.basename(path) == '.keep'
+        end
+
         unless content.nil?
           file.write(content)
           file.close
@@ -89,7 +90,9 @@ module Commands
 
     def create_dir(path)
       FileUtils.mkdir_p(path)
-      check_dir(path)
+      if check_existence(path, :dir)
+        STDOUT.puts "Created: #{File.basename(path)}".colorize(:green)
+      end
     end
   end
 end
