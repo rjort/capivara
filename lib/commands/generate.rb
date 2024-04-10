@@ -1,7 +1,7 @@
 module Commands
   class Generate
-    include Commands::Handle::CommandData
-    include Commands::Handle::GenerateHandle
+    include Commands::Handlers::CommandData
+    include Commands::Handlers::GenerateHandler
 
     def initialize
       @data ||= data_generate

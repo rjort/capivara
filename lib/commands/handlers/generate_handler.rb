@@ -1,6 +1,6 @@
 module Commands
-  module Handle
-    module GenerateHandle
+  module Handlers
+    module GenerateHandler
       def handle_write(path, text)
         if File.exist?(path)
           true
@@ -18,22 +18,21 @@ module Commands
         key = yield(full_path, text) if block_given?
   
         if key
-          puts "The file already exists. Do you want to overwrite it?( [y]es/[n]o".colorize(:yellow)
+          STDERR.puts "The file already exists. Do you want to overwrite it? [y]es/[n]o".colorize(:yellow)
           answer = $stdin.gets.chomp.downcase
           if answer == 'y' || answer == 'yes'
             arqv = File.open full_path, 'w'
             arqv.puts text
             arqv.close
-            puts "Overwritten: #{File.basename(full_path)}".colorize(:green)
+            STDOUT.puts "Overwritten: #{File.basename(full_path)}".colorize(:green)
           else
             exit 1
           end
         elsif !key
-          puts "Created: #{File.basename(full_path)}".colorize(:green)
+          STDOUT.puts "Created: #{File.basename(full_path)}".colorize(:green)
         else
           STDERR.puts "File #{File.basename(full_path)} not created".colorize(:red)
           STDERR.puts "Full path: #{full_path}".colorize(:yellow)
-          exit 1
         end
       end
     end
