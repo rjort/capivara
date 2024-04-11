@@ -21,7 +21,7 @@ class App
   arguments :strict
 
   flag [:T, :template], desc: "Use a template type. Verify the '/templates' directory",
-                        default_value: 'default',
+                        default_value: 'default_front',
                         arg_name: 'template_name'
 
   skips_pre

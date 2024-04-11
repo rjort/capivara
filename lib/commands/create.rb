@@ -10,7 +10,7 @@ module Commands
 
     def run_create
       search_template(@data[:templates_path], @data[:schema_type])
-      schema = load_template(File.join(@data[:templates_path], "#{@data[:schema_type]}.json"))
+      schema = load_template(File.join(@data[:templates_path], "#{@data[:schema_type]}.yml"))
       create_dir(@data[:project_root_path])
       create_template(@data[:project_root_path], schema)
     end
@@ -32,11 +32,8 @@ module Commands
       end
     end
 
-    # return JSON object
     def load_template(template_path)
-      json_data = File.read(template_path)
-
-      JSON.parse(json_data)
+      YAML.load(File.read(template_path))
     end
 
     def search_template(template_path, schema_type)
