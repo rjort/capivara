@@ -1,5 +1,6 @@
 require 'capivara/version'
 
+require 'yaml'
 require 'json'
 require 'colorize'
 require 'fileutils'
