@@ -89,10 +89,16 @@ class App
 
   post do |global, command, options, args|
     # TODO: Adicionar todas as escrituras de arquivo aqui
+    writer = Commands::Handlers::WriteConfigs.new
+    p writer
+    if command.name == :create
+      writer.write_configs_json_default("#{options[:n]}/capivara.json")
+    end
 
     # Post logic here
     # Use skips_post before a command to skip this
     # block on that command only
+    true
   end
 
   on_error do |_exception|
