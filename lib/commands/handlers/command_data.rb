@@ -20,6 +20,14 @@ module Commands
         @flag_value   = @@value
       end
 
+      def create_config_json(data)
+        @@configs = data
+      end
+
+      def data_config_json
+        @@configs
+      end
+
       def data_generate
         @project_path = Dir.pwd
         @json_path    = "#{@project_path}/capivara.json"
