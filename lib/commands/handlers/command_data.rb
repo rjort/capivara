@@ -47,14 +47,16 @@ module Commands
       end
 
       def data_config
-        @project_path = Dir.pwd
+        @project_root_path = Dir.pwd
         @project_name = File.basename(Dir.pwd)
-        @json_path    = "#{@project_path}/capivara.json"
+        @features_path = File.join(@project_root_path, 'features')
+        @json_path    = File.join(@project_root_path, 'capivara.json')
 
         {
-          project_path: @project_path,
           project_name: @project_name,
-          json_path: @json_path,
+          project_root_path: @project_root_path,
+          features_path: @features_path,
+          json_path: @json_path
         }
       end
 
