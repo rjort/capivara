@@ -90,9 +90,13 @@ class App
   post do |global, command, options, args|
     # TODO: Adicionar todas as escrituras de arquivo aqui
     writer = Commands::Handlers::WriteConfigs.new
-    p writer
+
     if command.name == :create
       writer.write_configs_json_default("#{options[:n]}/capivara.json")
+    end
+
+    if command.name == :config
+      writer.write_configs_json_default("#{Dir.pwd}/capivara.json")
     end
 
     # Post logic here
