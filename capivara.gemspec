@@ -10,7 +10,7 @@ spec = Gem::Specification.new do |s|
   s.summary = 'A description of your project'
   s.files = `git ls-files`.split("\n")
   s.require_paths << 'lib'
-  s.extra_rdoc_files = ['README.rdoc', 'capivara.rdoc']
+  s.extra_rdoc_files = ['README.md', 'capivara.rdoc']
   s.rdoc_options << '--title' << 'capivara' << '--main' << 'README.rdoc' << '-ri'
   s.bindir = 'bin'
   s.executables << 'capivara'
