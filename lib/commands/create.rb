@@ -13,9 +13,36 @@ module Commands
       schema = load_template(File.join(@data[:templates_path], "#{@data[:schema_type]}.yml"))
       create_dir(@data[:project_root_path])
       create_template(@data[:project_root_path], schema)
+      create_configs
     end
 
     private
+
+    def create_configs
+      pages = if @data[:schema_type] == 'default_front'
+                '/page_objects/pages'
+              else
+                '/services'
+              end
+      features_path = File.join(@data[:project_root_path], 'features')
+      pages_path = File.join(features_path, pages)
+      steps_path = File.join(features_path, '/step_definitions')
+      gherkin_path = File.join(features_path, '/specs')
+      section_path = File.join(features_path, "#{pages}/sections")
+
+      data = {
+        project_name: @data[:project_name],
+        project_path: @data[:project_root_path],
+        project_schema: @data[:schema_type],
+        features_path: features_path,
+        pages_path: pages_path,
+        steps_path: steps_path,
+        gherkin_path: gherkin_path,
+        section_path: section_path
+      }
+
+      create_config_json(data)
+    end
 
     def create_template(project_root_path, template)
       template.each do |name, content|
