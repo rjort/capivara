@@ -9,6 +9,10 @@ module Commands
                   :projet_root_path,
                   :flag_option,
                   :flag_value
+                  
+      def self.set_config_file_name(name)
+        @@config_file_name = name
+      end
 
       def self.set_template_type(type)
         @@schema_type = type
@@ -28,19 +32,12 @@ module Commands
         @@configs
       end
 
-      def data_generate
-        @project_path = Dir.pwd
-        @json_path    = "#{@project_path}/capivara.json"
-        @features_path = JSON.parse(File.read(@json_path))['path']
+      def get_config_file_name
+        @@config_file_name
+      end
 
+      def data_generate
         {
-          # TODO: para pages_path, validar caminho de acordo com o template
-          # o template de api usa => /services/nome_da_api.rb
-          pages_path: File.join(@features_path, '/page_objects/pages'),
-          steps_path: File.join(@features_path, '/step_definitions'),
-          section_path: File.join(@features_path, '/page_objects/sections'),
-          gherkin_path: File.join(@features_path, '/specs'),
-          json_path: @json_path,
           generate_flag: @@flag,
           generate_arg: @@value
         }

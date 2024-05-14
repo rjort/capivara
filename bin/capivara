@@ -82,6 +82,13 @@ class App
     if command.name == :generate
       # Envia para uma variavel de classe o simbolo da flag e o valor
       c_data.flag_options(opt)
+      config_file = Dir.glob('capivara.json')[0]
+      unless config_file.nil?
+        c_data.set_config_file_name(config_file)
+      else
+        STDERR.puts "Settings not exists. Create a new config with: capivara config --init"
+        exit -1
+      end
     end
 
     true
