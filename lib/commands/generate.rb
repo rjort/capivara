@@ -10,7 +10,7 @@ module Commands
       # check if config_name (capivara.json) exists
       if File.exist?(config_name) && !File.zero?(config_name)
         content_json = File.read(config_name)
-        p content_json
+
         # check if capivara.json content is empty
         unless content_json.empty?
           @config_file = JSON.parse(File.read(config_name))
