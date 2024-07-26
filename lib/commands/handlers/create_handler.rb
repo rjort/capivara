@@ -3,15 +3,13 @@ module Commands
     module CreateHandler
       def self.project_folder_exists?(path)
         result = Dir.exist?(path)
-
         if result
-          STDERR.puts 'Theres already a project with this name. Would you like to replace it? [y]es/[n]o'.colorize(:yellow)
+          warn 'Theres already a project with this name. Would you like to replace it? [y]es/[n]o'.colorize(:yellow)
           answer = $stdin.gets.chomp.downcase
-          if answer == 'y' || answer == 'yes'
-            return true
-          else
-            return false
-          end
+          return true if %w[y yes].include?(answer)
+
+          warn 'Project not created'
+          false
         else
           true
         end
