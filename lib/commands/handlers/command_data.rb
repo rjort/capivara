@@ -99,7 +99,7 @@ module Commands
         @configs = config_schema_template
         @configs[:project_root_path] = @project_name.to_s
         @configs[:project_name] = @project_name.capitalize
-        @configs[:features_path] = 'featutes'
+        @configs[:features_path] = 'features'
         @configs[:json_path] = 'capivara.json'
         @configs[:project_schema] = 'custom'
 
