@@ -4,8 +4,8 @@ spec = Gem::Specification.new do |s|
   s.name = 'capivara'
   s.version = Capivara::VERSION
   s.author = 'Reuter R. S. Junior'
-  s.email = 'reuter.regis@compasso.com.br'
-  s.homepage = 'http://github.com/reutertantofaz'
+  s.email = 'reuter_junior@hotmail.com'
+  s.homepage = 'http://github.com/rjort'
   s.platform = Gem::Platform::RUBY
   s.summary = 'A description of your project'
   s.files = `git ls-files`.split("\n")
@@ -19,6 +19,8 @@ spec = Gem::Specification.new do |s|
   s.add_runtime_dependency('json', '~> 2.3.0')
 
   s.add_development_dependency('minitest', '~> 5.14')
+  s.add_development_dependency('pry', '~> 0.14.2')
+  s.add_development_dependency('pry-byebug', '~> 3.10.1')
   s.add_development_dependency('rake', '~> 0.9.2')
   s.add_development_dependency('rdoc', '~> 4.3')
   s.add_development_dependency('rubocop', '~> 1.50')
