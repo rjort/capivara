@@ -22,9 +22,9 @@ module Commands
       @data[:features_path] = 'features'
       @data[:json_path]     = 'capivara.json'
       @data[:pages_path]    = File.join(@data[:features_path], page_type)
-      @data[:steps_path]    = File.join(@data[:features_path], '/step_definitions')
-      @data[:gherkin_path]  = File.join(@data[:features_path], '/specs')
-      @data[:section_path]  = File.join(@data[:features_path], "#{page_type}/sections")
+      @data[:steps_path]    = File.join(@data[:features_path], 'step_definitions')
+      @data[:gherkin_path]  = File.join(@data[:features_path], 'specs')
+      @data[:section_path]  = File.join(@data[:features_path], page_type, 'sections')
     end
 
     def create_template(project_root_path, template)

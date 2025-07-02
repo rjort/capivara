@@ -165,14 +165,14 @@ module Commands
       #
       # schema_type (string): default_back | default_front
       #
-      # default_front => '/page_object/pages'
-      # default_back => '/services'
+      # default_front => 'page_objects/pages'
+      # default_back  => 'services'
       def page_object_type_by_schema(schema_type)
         case schema_type
         when 'default_front'
-          '/page_object/pages'
+          'page_objects/pages'
         when 'default_back'
-          '/services'
+          'services'
         else
           warn 'Schema not found'
           exit(-1)
