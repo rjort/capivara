@@ -13,10 +13,12 @@ Nesta versão (v2.0.0), a ferramenta está sendo reconstruída em **Rust**, adot
 Faça o clone do projeto e recompile via Cargo:
 
 ```bash
-git clone https://github.com/seu-usuario/capivara_rust.git
-cd capivara_rust
+git clone https://github.com/seu-usuario/capivara.git
+cd capivara
 cargo build --release
 ```
+
+> **Nota de Migração**: O código original (v1) em Ruby foi movido de forma segura para a pasta `legacy_ruby/` para referência histórica.
 
 ## Comandos Disponíveis (Épico 1)
 
