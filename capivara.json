@@ -1,0 +1,10 @@
+{
+  "framework": "capybara",
+  "language": "ruby",
+  "paths": {
+    "features": "features",
+    "pages": "features/page_objects/pages",
+    "steps": "features/step_definitions"
+  },
+  "project_name": "automation_project"
+}
