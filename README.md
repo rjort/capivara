@@ -2,7 +2,7 @@
 
 Capivara é um projeto open-source que visa ajudar QAs e DEVs a criarem templates rápidos para automações de testes, tanto para FRONTEND quanto para BACKEND. 
 
-Nesta versão (v2.0.0), a ferramenta está sendo reconstruída em **Rust**, adotando uma abordagem híbrida (TUI + CLI) para oferecer maior extensibilidade de frameworks (Capybara, Playwright, Cypress) e uma experiência superior.
+Nesta versão (v2.0.0), a ferramenta está sendo reconstruída em **Rust**, adotando uma abordagem híbrida (TUI + CLI) para oferecer maior extensibilidade de frameworks (Capybara, Playwright, Cypress).
 
 ## Dependências
 
