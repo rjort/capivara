@@ -1,0 +1,26 @@
+capivara.json: null
+Readme.md: null
+cucumber.yml: null
+Gemfile: null
+Rakefile: null
+.rubocop.yml: null
+reports:
+  screenshots:
+    .keep: null
+features:
+  services:
+    .keep: null
+  specs:
+    .keep: null
+  step_definitions:
+    .keep: null
+  support:
+    config:
+      .keep: null
+    utils:
+      db:
+        .keep: null
+      schemas:
+        .keep: null
+    env.rb: null
+    hooks.rb: null
