@@ -4,6 +4,8 @@ use std::fs;
 use std::io::{self, Write};
 use std::path::Path;
 
+use crate::templates;
+
 const CONFIG_FILE: &str = "capivara.json";
 
 /// Executa o comando `config --init`
@@ -11,7 +13,10 @@ pub fn init() {
     let path = Path::new(CONFIG_FILE);
 
     if path.exists() {
-        println!("{}", "Aviso: O arquivo capivara.json já existe neste projeto!".yellow());
+        println!(
+            "{}",
+            "Aviso: O arquivo capivara.json já existe neste projeto!".yellow()
+        );
         print!("Deseja substituí-lo e perder as configurações atuais? (y/n): ");
         io::stdout().flush().unwrap();
 
@@ -58,7 +63,11 @@ pub fn remove() {
         return;
     }
 
-    println!("{}", "ATENÇÃO: O arquivo capivara.json será removido e todas as configurações serão perdidas.".red());
+    println!(
+        "{}",
+        "ATENÇÃO: O arquivo capivara.json será removido e todas as configurações serão perdidas."
+            .red()
+    );
     print!("Tem certeza que deseja continuar? (y/n): ");
     io::stdout().flush().unwrap();
 
@@ -83,7 +92,10 @@ pub fn show_configs() {
     let path = Path::new(CONFIG_FILE);
 
     if !path.exists() {
-        println!("{} não encontrado. Execute 'capivara config --init' para criar um.", CONFIG_FILE);
+        println!(
+            "{} não encontrado. Execute 'capivara config --init' para criar um.",
+            CONFIG_FILE
+        );
         return;
     }
 
@@ -96,4 +108,50 @@ pub fn show_configs() {
             println!("{} {}", "Erro ao ler o arquivo:".red(), e);
         }
     }
+}
+
+/// Executa o comando `config --template-save`, salvando um template YAML globalmente.
+pub fn save_template(template_path: &str) {
+    match templates::save_user_template(template_path) {
+        Ok(destination) => {
+            println!(
+                "{}",
+                format!("Template salvo com sucesso em {}", destination.display()).green()
+            );
+        }
+        Err(e) => {
+            println!("{} {}", "Erro ao salvar template:".red(), e);
+        }
+    }
+}
+
+/// Executa o comando `config --list-template`, exibindo templates internos e do usuário.
+pub fn list_templates() {
+    match templates::list_templates() {
+        Ok((internal, user)) => {
+            println!("{}", "Templates internos:".cyan());
+            for template in internal {
+                println!("- {}", template);
+            }
+
+            println!("{}", "Templates do usuário:".cyan());
+            if user.is_empty() {
+                println!("Nenhum template salvo em {}.", templates_dir_label());
+                return;
+            }
+
+            for template in user {
+                println!("- {}", template);
+            }
+        }
+        Err(e) => {
+            println!("{} {}", "Erro ao listar templates:".red(), e);
+        }
+    }
+}
+
+fn templates_dir_label() -> String {
+    templates::user_templates_dir()
+        .map(|path| path.display().to_string())
+        .unwrap_or_else(|_| "$HOME/.capivara/templates".to_string())
 }
