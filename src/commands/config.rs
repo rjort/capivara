@@ -34,10 +34,14 @@ pub fn init() {
         "project_name": "automation_project",
         "framework": "capybara",
         "language": "ruby",
+        "template": "default_front",
         "paths": {
             "features": "features",
+            "gherkin": "features/specs",
             "pages": "features/page_objects/pages",
-            "steps": "features/step_definitions"
+            "steps": "features/step_definitions",
+            "sections": "features/page_objects/sections",
+            "services": "features/services"
         }
     });
 

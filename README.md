@@ -1,8 +1,8 @@
-# Capivara (v2.1.0)
+# Capivara (v2.2.0)
 
 Capivara é um projeto open-source que visa ajudar QAs e DEVs a criarem templates rápidos para automações de testes, tanto para FRONTEND quanto para BACKEND. 
 
-Nesta versão (v2.1.0), a ferramenta está sendo reconstruída em **Rust**, adotando uma abordagem híbrida (TUI + CLI) para oferecer maior extensibilidade de frameworks (Capybara, Playwright, Cypress).
+Nesta versão (v2.2.0), a ferramenta está sendo reconstruída em **Rust**, adotando uma abordagem híbrida (TUI + CLI) para oferecer maior extensibilidade de frameworks (Capybara, Playwright, Cypress).
 
 ## Dependências
 
@@ -82,6 +82,25 @@ capivara config --list-template
 capivara config -L
 ```
 
+O arquivo `capivara.json` criado pelo `config --init` define os paths usados pelo comando `generate`:
+
+```json
+{
+  "project_name": "automation_project",
+  "framework": "capybara",
+  "language": "ruby",
+  "template": "default_front",
+  "paths": {
+    "features": "features",
+    "gherkin": "features/specs",
+    "pages": "features/page_objects/pages",
+    "steps": "features/step_definitions",
+    "sections": "features/page_objects/sections",
+    "services": "features/services"
+  }
+}
+```
+
 ### Criar Projeto (CREATE)
 
 Cria uma estrutura de projeto de automação a partir de um template. Quando o template é omitido, o Capivara utiliza `default_front`.
@@ -96,7 +115,7 @@ capivara c --new meu_projeto -T meu_template
 
 Os templates do Capivara são arquivos YAML (`.yml` ou `.yaml`) que descrevem a estrutura de pastas e arquivos que será criada pelo comando `create`.
 
-Na versão `v2.1.0`, existem dois tipos de templates:
+Atualmente, existem dois tipos de templates:
 
 - Templates internos, disponíveis no próprio Capivara: `default_front` e `default_back`.
 - Templates do usuário, salvos em `$HOME/.capivara/templates`.
@@ -155,6 +174,50 @@ features:
 ```
 
 Ao criar `capivara create --new minha_automacao`, o caminho gerado será `features/support/env/minha_automacao/dev/base.yml`.
+
+### Gerar Arquivos (GENERATE)
+
+O comando `generate` cria arquivos dentro de um projeto já existente, usando as configurações do `capivara.json`.
+
+Na versão `v2.2.0`, o `generate --all` usa o padrão Capybara/Ruby e cria três arquivos principais:
+
+- Gherkin em `paths.gherkin`.
+- Page object em `paths.pages`.
+- Step definition em `paths.steps`.
+
+Exemplo:
+
+```bash
+capivara generate --all login
+# ou
+capivara generate -A login
+# ou
+capivara g --all login
+```
+
+Com o `capivara.json` padrão, o comando acima cria:
+
+```text
+features/specs/login/login.feature
+features/page_objects/pages/login/login.rb
+features/step_definitions/login/login_step.rb
+```
+
+Também é possível informar caminhos relativos no nome do arquivo:
+
+```bash
+capivara generate -A admin/login
+```
+
+Nesse caso, o Capivara cria os arquivos dentro das subpastas correspondentes, mantendo o nome final como base do arquivo:
+
+```text
+features/specs/admin/login/login.feature
+features/page_objects/pages/admin/login/login.rb
+features/step_definitions/admin/login/login_step.rb
+```
+
+Se algum arquivo já existir, o Capivara exibirá um warning e perguntará se o arquivo deve ser substituído.
 
 ---
 
