@@ -33,6 +33,14 @@ fn main() {
         Some(Commands::Create { new, template }) => {
             commands::create::run(new, template.as_deref());
         }
+        Some(Commands::Generate { all }) => {
+            if let Some(file_name) = all {
+                commands::generate::all(file_name);
+            } else {
+                println!("Por favor, forneça uma flag para o comando generate. Ex: --all ou -A");
+                println!("Use 'capivara generate --help' para mais informações.");
+            }
+        }
         Some(Commands::Configs) => {
             commands::config::show_configs();
         }

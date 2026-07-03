@@ -3,7 +3,7 @@ use clap::{Parser, Subcommand};
 /// Capivara - Gerador de templates para automação de testes
 #[derive(Parser)]
 #[command(name = "capivara")]
-#[command(version = "2.1.0", about = "CLI para gerar templates de automação", long_about = None)]
+#[command(version = "2.2.0", about = "CLI para gerar templates de automação", long_about = None)]
 pub struct Cli {
     #[command(subcommand)]
     pub command: Option<Commands>,
@@ -39,6 +39,16 @@ pub enum Commands {
         /// Template usado para criar o projeto
         #[arg(short = 'T', long = "template", value_name = "template")]
         template: Option<String>,
+    },
+    /// Gera arquivos de automação a partir do capivara.json
+    #[command(
+        alias = "g",
+        long_about = "Gera arquivos de automação a partir do capivara.json.\n\nExemplos:\n  capivara generate --all login\n  capivara generate -A admin/login\n  capivara g --all login"
+    )]
+    Generate {
+        /// Gera gherkin, page object e step definition
+        #[arg(short = 'A', long = "all", value_name = "nome_do_arquivo")]
+        all: Option<String>,
     },
     /// Exibe o conteúdo do arquivo capivara.json
     Configs,
